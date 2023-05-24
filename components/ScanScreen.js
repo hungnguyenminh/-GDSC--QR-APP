@@ -9,72 +9,73 @@ import {
 } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
-import {database} from './component/firebaseconfig'
+import {database} from '../firebase/config'
 import {
   ref,
-  onValue,
-  push,
-  update,
-  remove
+  set,
+  get
 } from 'firebase/database';
+
+function containsSpecialCharacters(str) {
+  var specialCharacters = [".", "#", "$", "[", "]"];
+
+  for (var i = 0; i < specialCharacters.length; i++) {
+    if (str.includes(specialCharacters[i])) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 class ScanScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showScanner: false,
-      scannedLink: null
+      scannedMessage: null
     };
   }
-  array = [
-    {
-      Name: "tuyen",
-      organize: "gdsc-ptit",
-      email: "@gdscptit.dev"
-    },
-    {
-      Name: "son",
-      organize: "gdsc-ptit",
-      email: "@gdscptit.dev"
-    },
-    {
-      Name: "hung",
-      organize: "gdsc-ptit",
-      email: "@gdscptit.dev"
-    },
-    {
-      Name: "Khiem",
-      organize: "gdsc-ptit",
-      email: "@gdscptit.dev"
-    },
-    {
-      Name: "duy",
-      organize: "gdsc-ptit",
-      email: "@gdscptit.dev"
-    },
-  ];
+
   onSuccess = e => {
-    for(let i = 0; i < this.array.length; i++)
-    {
-       if(e.data === this.array[i].Name)
-       {
-        push(ref(database, '/users/info'), {
-          Name: this.array[i].Name,
-          organize: this.array[i].organize,
-          email: e.data +"ptit"+ this.array[i].email
-        });
-        break;
-       }
+
+    const docId = e.data;
+    let message = null;
+
+    if (containsSpecialCharacters(docId)) {
+      this.setState({ scannedMessage: "docID not valid!", showScanner: false });
+      return;
     }
     
-    this.setState({ scannedLink: e.data, showScanner: false });
-  };
-  onScan = () => {
-    this.setState({ showScanner: true });
+    get(ref(database, '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/'+docId)).then(snapshot => {
+        if (snapshot.exists()) {
+          //lấy dữ liệu doc cũ
+          let oldDoc = snapshot.val();
+          console.log(oldDoc);
+
+          //đổi dữ liệu doc cũ
+          oldDoc["Valid"] = true;
+
+          //tạo biến đại diện doc mới
+          const newDoc = oldDoc;
+          message = JSON.stringify(newDoc);
+
+          //đẩy dữ liệu mới lên firebase
+          set(ref(database, '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/'+docId), newDoc);
+        } else {
+          //console.log("No data available");
+          message = "No data available";
+        }
+    })
+    .catch((error) => {
+        //console.error(error);
+        message = error;
+    });
+
+    this.setState({ ...this, scannedMessage: message, showScanner: false });
   };
 
-  onOpenLink = () => {
-    Linking.openURL(this.state.scannedLink);
+  onScan = () => {
     this.setState({ showScanner: true });
   };
 
@@ -96,15 +97,9 @@ class ScanScreen extends Component {
           />
         ) : (
           <>
-            {this.state.scannedLink ? (
+            {this.state.scannedMessage ? (
               <View style={styles.linkContainer}>
-                <Text style={styles.linkText}>{this.state.scannedLink}</Text>
-                <TouchableOpacity
-                  style={styles.buttonTouchable}
-                  onPress={this.onOpenLink}
-                >
-                  <Text style={styles.buttonText}>Open</Text>
-                </TouchableOpacity>
+                <Text style={styles.linkText}>{this.state.scannedMessage}</Text>
                 <TouchableOpacity
                   style={styles.buttonTouchable}
                   onPress={this.onScan}

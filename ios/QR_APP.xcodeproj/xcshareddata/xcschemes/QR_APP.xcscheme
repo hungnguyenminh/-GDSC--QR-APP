@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "QR_APP.app"
-               BlueprintName = "QR_APP"
-               ReferencedContainer = "container:QR_APP.xcodeproj">
+               BuildableName = "QR_App.app"
+               BlueprintName = "QR_App"
+               ReferencedContainer = "container:QR_App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "QR_APPTests.xctest"
-               BlueprintName = "QR_APPTests"
-               ReferencedContainer = "container:QR_APP.xcodeproj">
+               BuildableName = "QR_AppTests.xctest"
+               BlueprintName = "QR_AppTests"
+               ReferencedContainer = "container:QR_App.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "QR_APP.app"
-            BlueprintName = "QR_APP"
-            ReferencedContainer = "container:QR_APP.xcodeproj">
+            BuildableName = "QR_App.app"
+            BlueprintName = "QR_App"
+            ReferencedContainer = "container:QR_App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "QR_APP.app"
-            BlueprintName = "QR_APP"
-            ReferencedContainer = "container:QR_APP.xcodeproj">
+            BuildableName = "QR_App.app"
+            BlueprintName = "QR_App"
+            ReferencedContainer = "container:QR_App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
