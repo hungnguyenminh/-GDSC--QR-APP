@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
-import {database} from './component/firebaseconfig'
+import {database} from './src/configs/firebase/firebaseconfig'
 import {
   ref,
   onValue,

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { ref,uploadBytes } from "firebase/storage";
 import {Text,View,TouchableOpacity} from "react-native"
-import { storage } from "./component/firebaseconfig";
+import { storage } from "./src/configs/firebase/firebaseconfig";
 
 export default function App() {
      const [image, setImage] = useState('');
