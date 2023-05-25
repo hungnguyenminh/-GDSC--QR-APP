@@ -1,14 +1,9 @@
-
-// import UploadImage from './Screen3';
-import React, {useRef} from 'react';
+import React, {ReactElement} from 'react';
 import {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Text, ImageBackground} from 'react-native';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {ref, onValue, push, update, remove, set} from 'firebase/database';
-import ViewShot from 'react-native-view-shot';
-import {database, storage} from '../../configs/firebase/firebaseconfig';
-import {ref as refStorage, uploadBytes, getDownloadURL} from 'firebase/storage';
-import QRCode from 'react-native-qrcode-svg';
+import {View, TouchableOpacity, Text} from 'react-native';
+import { useNavigation} from '@react-navigation/native';
+import {ref, onValue, set} from 'firebase/database';
+import {database} from '../../configs/firebase/firebaseconfig';
 import QRCodeGenerator from "../QRCodeGenerator";
 
 
@@ -47,7 +42,7 @@ function updateById(docId: string, Object: Idata) {
   );
 }
 
-export default function HomePage() {
+export default function HomePage(): ReactElement {
   const navigation = useNavigation();
   const [data, setData] = useState<any>([]);
   const [isStart, setIsStart] = useState<boolean>(false);
