@@ -73,7 +73,7 @@ class ScanScreen extends Component {
 
   onScan = () => {
     this.setState({ showScanner: true });
-  };
+  };  
 
   render() {
     return (

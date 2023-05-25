@@ -6,6 +6,8 @@ import React from 'react';
 import ScanScreen from './components/ScanScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//check for internet lib
+import NetInfo, { useNetInfo } from "@react-native-community/netinfo";
 
 interface Participant {
   ID: number,
@@ -17,6 +19,8 @@ interface Participant {
 }
 
 export default function App() {
+
+  const netInfo = useNetInfo();
 
   // const [data, setData] = useState<Participant>({
   //     ID: 0,
@@ -81,5 +85,9 @@ export default function App() {
   //   </ScrollView>
   // );
 
-  return <ScanScreen/>
+  return (
+    <>
+      {netInfo.isConnected && <ScanScreen/>}
+    </>
+  );
 }
