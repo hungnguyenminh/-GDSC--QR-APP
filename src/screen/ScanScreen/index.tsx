@@ -1,53 +1,68 @@
 import React, {Component, ReactElement, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Linking} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Linking,} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 // import {RNCamera} from 'react-native-camera';
-import {ref, onValue, push, update, remove} from 'firebase/database';
+import {ref, get, set} from 'firebase/database';
 import {database} from '../../configs/firebase/firebaseconfig.js';
+import AlertStatus from '../../components/AlertStatus.js'
+
+function containsSpecialCharacters(str) {
+  var specialCharacters = [".", "#", "$", "[", "]"];
+
+  for (var i = 0; i < specialCharacters.length; i++) {
+    if (str.includes(specialCharacters[i])) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 function ScanSrceen(): ReactElement {
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [scannerLink, setScannerLink] = useState<string | null>(null);
-  const array = [
-    {
-      Name: 'tuyen',
-      organize: 'gdsc-ptit',
-      email: '@gdscptit.dev',
-    },
-    {
-      Name: 'son',
-      organize: 'gdsc-ptit',
-      email: '@gdscptit.dev',
-    },
-    {
-      Name: 'hung',
-      organize: 'gdsc-ptit',
-      email: '@gdscptit.dev',
-    },
-    {
-      Name: 'Khiem',
-      organize: 'gdsc-ptit',
-      email: '@gdscptit.dev',
-    },
-    {
-      Name: 'duy',
-      organize: 'gdsc-ptit',
-      email: '@gdscptit.dev',
-    },
-  ];
-  const onSuccess = e => {
-    for (let i = 0; i < array.length; i++) {
-      if (e.data === array[i].Name) {
-        push(ref(database, '/users/info'), {
-          Name: array[i].Name,
-          organize: array[i].organize,
-          email: e.data + 'ptit' + array[i].email,
-        });
-        break;
-      }
+
+
+  const [check, setCheck] = useState(false);
+
+  const onSuccess = (e) => {
+    const docId = e.data;
+    //chứa kí tự đặc biệt
+    if (containsSpecialCharacters(docId)) {
+      setScannerLink("docID not valid");
+      setShowScanner(false);
+      return;
     }
+    //cập nhật doc
+    get(ref(database, '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/'+docId)).then(snapshot => {
+      if (snapshot.exists()) {
+        //lấy dữ liệu doc cũ
+        let oldDoc = snapshot.val();
+        console.log(oldDoc);
+
+        //đổi dữ liệu doc cũ
+        oldDoc["Valid"] = true;
+
+        //tạo biến đại diện doc mới
+        const newDoc = oldDoc;
+
+        //đẩy dữ liệu mới lên firebase
+        set(ref(database, '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/'+docId), newDoc);
+
+        setCheck(true);
+      } else {
+        setCheck(false);
+        setScannerLink("No data available");
+        console.log("No data available");
+      }
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+
     setShowScanner(false);
-    setScannerLink( e.data);
+    setScannerLink(docId);
+
     // this.setState({scannedLink: e.data, showScanner: false});
   };
   const onScan = () => {
@@ -75,12 +90,13 @@ function ScanSrceen(): ReactElement {
         <>
           {scannerLink ? (
             <View style={styles.linkContainer}>
-              <Text style={styles.linkText}>{scannerLink}</Text>
-              <TouchableOpacity
+              {check ? ((<AlertStatus name="Check in thành công" status={true}></AlertStatus>)) : (<AlertStatus name="Mã QR không hợp lệ" status={false}></AlertStatus>)}
+              {/* <Text style={styles.linkText}>{scannerLink}</Text> */}
+              {/* <TouchableOpacity
                 style={styles.buttonTouchable}
                 onPress={onOpenLink}>
                 <Text style={styles.buttonText}>Open</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity style={styles.buttonTouchable} onPress={onScan}>
                 <Text style={styles.buttonText}>Scan</Text>
               </TouchableOpacity>
@@ -104,18 +120,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  centerText: {
-    flex: 1,
-    fontSize: 18,
-    padding: 32,
-    color: '#777',
+  successAlert: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+    marginBottom:20
   },
   buttonText: {
     fontSize: 21,
-    color: 'rgb(0,122,255)',
+    color: 'white',
   },
   buttonTouchable: {
+    backgroundColor:'rgb(0,122,255)',
+    alignItems: 'center',
+    width: 200,
     padding: 16,
+    borderRadius:5,
   },
   linkContainer: {
     alignItems: 'center',
@@ -127,6 +146,9 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
   },
+  centerText: {
+
+  }
 });
 
 export default ScanSrceen;
