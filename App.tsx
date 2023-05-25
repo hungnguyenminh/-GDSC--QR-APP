@@ -1,7 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import QRCodeGenerator from './src/screen/QRCodeGenerator';
-import ScanScreen from './ScanScreen';
+import ScanScreen from './src/screen/ScanScreen';
 import HomePage from './src/screen/HomePage';
 
 const Stack = createStackNavigator();
