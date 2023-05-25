@@ -40,7 +40,6 @@ class ScanScreen extends Component {
   onSuccess = e => {
 
     const docId = e.data;
-    let message = null;
 
     if (containsSpecialCharacters(docId)) {
       this.setState({ scannedMessage: "docID not valid!", showScanner: false });
@@ -58,21 +57,18 @@ class ScanScreen extends Component {
 
           //tạo biến đại diện doc mới
           const newDoc = oldDoc;
-          message = JSON.stringify(newDoc);
 
           //đẩy dữ liệu mới lên firebase
           set(ref(database, '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/'+docId), newDoc);
         } else {
-          //console.log("No data available");
-          message = "No data available";
+          console.log("No data available");
         }
     })
     .catch((error) => {
-        //console.error(error);
-        message = error;
+        console.error(error);
     });
 
-    this.setState({ ...this, scannedMessage: message, showScanner: false });
+    this.setState({ ...this, scannedMessage: "ok", showScanner: false });
   };
 
   onScan = () => {
