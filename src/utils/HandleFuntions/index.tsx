@@ -22,10 +22,16 @@ function updateById(docId: string, Object: Idata) {
       Name: Object.Age,
       Age: Object.Age,
       Email: Object.Email,
-      LinkQR: '123566',
+      LinkQR: Object.LinkQR,
       Valid: Object.Valid,
     },
-  );
+  )
+  .then((res) => {
+    console.log("success");
+  })
+  .catch((res) => {
+    console.log("failed!");
+  });
 }
 
 export {updateById};

@@ -1,13 +1,12 @@
 import React, {ReactElement} from 'react';
 import {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import { useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {ref, onValue, set} from 'firebase/database';
 import {database} from '../../configs/firebase/firebaseconfig';
-import { updateById } from '../../utils/HandleFuntions';
+import {updateById} from '../../utils/HandleFuntions';
 // import QRCodeGenerator from "../QRCodeGenerator";
-import {useNetInfo} from "@react-native-community/netinfo";
-
+import {useNetInfo} from '@react-native-community/netinfo';
 
 interface Idata {
   ID: number;
@@ -18,7 +17,6 @@ interface Idata {
   Valid: boolean;
 }
 
-
 export default function HomePage(): ReactElement {
   const navigation = useNavigation();
   const [data, setData] = useState<any>([]);
@@ -28,21 +26,22 @@ export default function HomePage(): ReactElement {
   console.log('data', data.length);
 
   const handlegenerator = () => {
-    console.log("handlegenerator");
-    
-    for(const key in data) {
+    // console.log('handlegenerator');
+    // const docRef = database.ref('142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/');
+    // docRef.remove();
+
+    for (const key in data) {
       const newObj = {
         Age: data[key].Age,
-        Email: `${data[key].Age}@gdsc.com-check`,
+        Email: `${data[key].Age}@gdsc.com-123`,
         ID: data[key].ID,
         LinkQR: `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${data[key].ID}`,
         Name: data[key].Name,
         Valid: data[key].Valid,
       };
-  
-      updateById( data[key].ID, newObj);
+
+      updateById(data[key].ID, newObj);
     }
-    
   };
 
   useEffect(() => {
@@ -62,36 +61,44 @@ export default function HomePage(): ReactElement {
           <QRCodeGenerator key={index} item={item} itemKey={index} />
         ))} */}
 
-      {netInfo.isConnected ? <><TouchableOpacity
-        style={{
-          backgroundColor: 'blue',
-          padding: 10,
-          borderRadius: 5,
-          marginTop: 10,
-        }}
-        onPress={handlegenerator}
-        // onPress={() => {
-        //   setIsStart(true);
-        //   console.log('ssss');
-        // }}
-      >
-        <Text style={{color: 'white', textAlign: 'center'}}>
-          QRCodeGenerator
+      {netInfo.isConnected ? (
+        <>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'blue',
+              padding: 10,
+              borderRadius: 5,
+              marginTop: 10,
+            }}
+            onPress={handlegenerator}
+            // onPress={() => {
+            //   setIsStart(true);
+            //   console.log('ssss');
+            // }}
+          >
+            <Text style={{color: 'white', textAlign: 'center'}}>
+              QRCodeGenerator
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'green',
+              padding: 10,
+              borderRadius: 5,
+              marginTop: 10,
+              width: 130,
+            }}
+            onPress={() => navigation.navigate('Screen2')}>
+            <Text style={{color: 'white', textAlign: 'center'}}>
+              ScanScreen
+            </Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <Text style={{color: 'black', textAlign: 'center'}}>
+          No internet connection
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          backgroundColor: 'green',
-          padding: 10,
-          borderRadius: 5,
-          marginTop: 10,
-          width: 130,
-        }}
-        onPress={() => navigation.navigate('Screen2')}>
-        <Text style={{color: 'white', textAlign: 'center'}}>ScanScreen</Text>
-      </TouchableOpacity></>: <Text style={{color: 'black', textAlign: 'center'}}>No internet connection</Text>}
+      )}
     </View>
   );
 }
-
-
