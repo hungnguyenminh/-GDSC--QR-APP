@@ -1,6 +1,6 @@
-import {Idata} from '../../types';
+import {Idata} from './Data';
 import {ref, onValue, set} from 'firebase/database';
-import {database} from '../../configs/firebase/firebaseconfig';
+import {database} from '../src/configs/firebase/firebaseconfig';
 
 function updateById(docId: string, Object: Idata) {
   const docRef = ref(
@@ -22,16 +22,10 @@ function updateById(docId: string, Object: Idata) {
       Name: Object.Age,
       Age: Object.Age,
       Email: Object.Email,
-      LinkQR: Object.LinkQR,
+      LinkQR: '123566',
       Valid: Object.Valid,
     },
-  )
-  .then((res) => {
-    console.log("success");
-  })
-  .catch((res) => {
-    console.log("failed!");
-  });
+  );
 }
 
 export {updateById};
