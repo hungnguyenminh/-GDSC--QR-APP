@@ -49,10 +49,11 @@ export default function HomePage(): ReactElement {
       '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1',
     );
     onValue(sheetRef, snapshot => {
-      console.log('1234', snapshot.val());
+      // console.log('1234', snapshot.val());
       setData(snapshot.val());
     });
   }, []);
+
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       {/* {isStart &&
