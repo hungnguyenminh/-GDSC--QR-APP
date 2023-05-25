@@ -12,7 +12,7 @@ export default function App() {
       <Stack.Navigator
        screenOptions={{
         headerStyle: {
-          backgroundColor: 'rgb(72, 109, 228)',
+          backgroundColor: '#060b0f',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -21,8 +21,8 @@ export default function App() {
       }}
       >
         <Stack.Screen name="Home" component={HomePage} />
-        <Stack.Screen name="Screen1" component={QRCodeGenerator} />
-        <Stack.Screen name="Screen2" component={ScanScreen} />
+        <Stack.Screen name="GenerateQR" component={QRCodeGenerator} />
+        <Stack.Screen name="ScanQR" component={ScanScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

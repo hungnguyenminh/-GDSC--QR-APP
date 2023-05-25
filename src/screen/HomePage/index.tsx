@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
 import {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, ImageBackground} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ref, onValue, set} from 'firebase/database';
 import {database} from '../../configs/firebase/firebaseconfig';
@@ -62,44 +62,49 @@ export default function HomePage(): ReactElement {
           <QRCodeGenerator key={index} item={item} itemKey={index} />
         ))} */}
 
-      {netInfo.isConnected ? (
-        <>
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'blue',
-              padding: 10,
-              borderRadius: 5,
-              marginTop: 10,
-            }}
-            onPress={handlegenerator}
-            // onPress={() => {
-            //   setIsStart(true);
-            //   console.log('ssss');
-            // }}
-          >
-            <Text style={{color: 'white', textAlign: 'center'}}>
-              QRCodeGenerator
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'green',
-              padding: 10,
-              borderRadius: 5,
-              marginTop: 10,
-              width: 130,
-            }}
-            onPress={() => navigation.navigate('Screen2')}>
-            <Text style={{color: 'white', textAlign: 'center'}}>
-              ScanScreen
-            </Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <Text style={{color: 'black', textAlign: 'center'}}>
-          No internet connection
-        </Text>
-      )}
+      <ImageBackground
+        source={require('../../assets/bg.png')}
+        resizeMode="cover"
+        style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
+        {netInfo.isConnected ? (
+          <>
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'blue',
+                padding: 10,
+                borderRadius: 5,
+                marginTop: 10,
+              }}
+              onPress={handlegenerator}
+              // onPress={() => {
+              //   setIsStart(true);
+              //   console.log('ssss');
+              // }}
+            >
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                QRCodeGenerator
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'green',
+                padding: 10,
+                borderRadius: 5,
+                marginTop: 10,
+                width: 130,
+              }}
+              onPress={() => navigation.navigate('ScanQR')}>
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                ScanScreen
+              </Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <Text style={{color: 'black', textAlign: 'center'}}>
+            No internet connection
+          </Text>
+        )}
+      </ImageBackground>
     </View>
   );
 }

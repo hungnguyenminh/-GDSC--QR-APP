@@ -1,5 +1,5 @@
 import React, {Component, ReactElement, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Linking,} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Linking,ImageBackground} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 // import {RNCamera} from 'react-native-camera';
 import {ref, get, set} from 'firebase/database';
@@ -77,6 +77,10 @@ function ScanSrceen(): ReactElement {
   };
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={require('../../assets/bg.png')}
+        resizeMode="cover"
+        style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
       {showScanner ? (
         <QRCodeScanner
           onRead={onSuccess}
@@ -108,6 +112,7 @@ function ScanSrceen(): ReactElement {
           )}
         </>
       )}
+      </ImageBackground>
     </View>
   );
 }
