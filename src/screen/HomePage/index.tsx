@@ -6,6 +6,7 @@ import {ref, onValue, set} from 'firebase/database';
 import {database} from '../../configs/firebase/firebaseconfig';
 import { updateById } from '../../utils/HandleFuntions';
 // import QRCodeGenerator from "../QRCodeGenerator";
+import {useNetInfo} from "@react-native-community/netinfo";
 
 
 interface Idata {
@@ -22,6 +23,7 @@ export default function HomePage(): ReactElement {
   const navigation = useNavigation();
   const [data, setData] = useState<any>([]);
   const [isStart, setIsStart] = useState<boolean>(false);
+  const netInfo = useNetInfo();
 
   console.log('data', data.length);
 
@@ -60,7 +62,7 @@ export default function HomePage(): ReactElement {
           <QRCodeGenerator key={index} item={item} itemKey={index} />
         ))} */}
 
-      <TouchableOpacity
+      {netInfo.isConnected ? <><TouchableOpacity
         style={{
           backgroundColor: 'blue',
           padding: 10,
@@ -87,7 +89,7 @@ export default function HomePage(): ReactElement {
         }}
         onPress={() => navigation.navigate('Screen2')}>
         <Text style={{color: 'white', textAlign: 'center'}}>ScanScreen</Text>
-      </TouchableOpacity>
+      </TouchableOpacity></>: <Text style={{color: 'black', textAlign: 'center'}}>No internet connection</Text>}
     </View>
   );
 }
