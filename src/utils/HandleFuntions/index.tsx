@@ -1,11 +1,13 @@
 import {Idata} from '../../types';
 import {ref, onValue, set} from 'firebase/database';
-import {database} from '../../configs/firebase/firebaseconfig';
+import {database, linkSheet} from '../../configs/firebase/firebaseconfig';
 
 function updateById(docId: string, Object: Idata) {
+  console.log();
+  
   const docRef = ref(
     database,
-    '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/' + docId,
+    `${linkSheet}/${docId}`
   );
   let doc: Idata;
   onValue(docRef, snapshot => {
@@ -15,7 +17,7 @@ function updateById(docId: string, Object: Idata) {
   set(
     ref(
       database,
-      '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/' + docId,
+      `${linkSheet}/${docId}`,
     ),
     {
       ID: Object.ID,

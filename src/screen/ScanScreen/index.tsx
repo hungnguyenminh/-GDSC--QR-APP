@@ -33,7 +33,7 @@ function ScanSrceen(): ReactElement {
       return;
     }
     //cập nhật doc
-    get(ref(database, '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/'+docId)).then(snapshot => {
+    get(ref(database,  `${linkSheet}/${docId}`)).then(snapshot => {
       if (snapshot.exists()) {
         //lấy dữ liệu doc cũ
         let oldDoc = snapshot.val();
@@ -46,7 +46,7 @@ function ScanSrceen(): ReactElement {
         const newDoc = oldDoc;
 
         //đẩy dữ liệu mới lên firebase
-        set(ref(database, '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/'+docId), newDoc);
+        set(ref(database, `${linkSheet}/${docId}`), newDoc);
 
         setCheck(true);
       } else {

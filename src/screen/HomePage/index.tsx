@@ -26,6 +26,8 @@ export default function HomePage(): ReactElement {
   const [isGenSuccess, setIsGenSuccess] = useState<boolean>(true);
 
   console.log('linkSheet', linkSheet);
+  console.log("data", data);
+  
 
   const handlegenerator = () => {
     // console.log('handlegenerator');
@@ -49,7 +51,7 @@ export default function HomePage(): ReactElement {
   useEffect(() => {
     const sheetRef = ref(
       database,
-      '142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1',
+      linkSheet,
     );
     onValue(sheetRef, snapshot => {
       // console.log('1234', snapshot.val());
