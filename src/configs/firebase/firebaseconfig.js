@@ -1,11 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { getStorage} from "firebase/storage";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const linkSheet = "142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1";
 const firebaseConfig = {
   apiKey: "AIzaSyAELzR4q4bjuFBwiyODlQRNnSvbTdUfKAw",
   authDomain: "gdsc---qr-app.firebaseapp.com",
@@ -22,5 +19,6 @@ const database = getDatabase(app);
 const storage = getStorage(app);
 export {
   database,
-  storage
+  storage,
+  linkSheet
 }

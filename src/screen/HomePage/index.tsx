@@ -3,10 +3,11 @@ import {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Text, ImageBackground} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ref, onValue, set} from 'firebase/database';
-import {database} from '../../configs/firebase/firebaseconfig';
+import {database, linkSheet} from '../../configs/firebase/firebaseconfig';
 import {updateById} from '../../utils/HandleFuntions';
 // import QRCodeGenerator from "../QRCodeGenerator";
 import {useNetInfo} from '@react-native-community/netinfo';
+import AlertStatus from '../../components/AlertStatus.js';
 
 interface Idata {
   ID: number;
@@ -22,8 +23,9 @@ export default function HomePage(): ReactElement {
   const [data, setData] = useState<any>([]);
   const [isStart, setIsStart] = useState<boolean>(false);
   const netInfo = useNetInfo();
+  const [isGenSuccess, setIsGenSuccess] = useState<boolean>(true);
 
-  console.log('data', data.length);
+  console.log('linkSheet', linkSheet);
 
   const handlegenerator = () => {
     // console.log('handlegenerator');
@@ -33,7 +35,7 @@ export default function HomePage(): ReactElement {
     for (const key in data) {
       const newObj = {
         Age: data[key].Age,
-        Email: `${data[key].Age}@gdsc.com-123`,
+        Email: data[key].Email,
         ID: data[key].ID,
         LinkQR: `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${data[key].ID}`,
         Name: data[key].Name,
@@ -62,18 +64,33 @@ export default function HomePage(): ReactElement {
           <QRCodeGenerator key={index} item={item} itemKey={index} />
         ))} */}
 
+      {/* {isGenSuccess && (
+        <AlertStatus
+          name="Generate Success"
+          status={true}
+          isShowAlert={isGenSuccess}
+          setIsShowAlert={setIsGenSuccess}
+        />
+      )} */}
+
       <ImageBackground
         source={require('../../assets/bg.png')}
         resizeMode="cover"
-        style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
+        style={{
+          height: '100%',
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         {netInfo.isConnected ? (
           <>
             <TouchableOpacity
               style={{
                 backgroundColor: 'blue',
-                padding: 10,
-                borderRadius: 5,
+                paddingVertical: 15,
+                borderRadius: 12,
                 marginTop: 10,
+                width: 150,
               }}
               onPress={handlegenerator}
               // onPress={() => {
@@ -88,10 +105,10 @@ export default function HomePage(): ReactElement {
             <TouchableOpacity
               style={{
                 backgroundColor: 'green',
-                padding: 10,
-                borderRadius: 5,
+                paddingVertical: 15,
+                borderRadius: 12,
                 marginTop: 10,
-                width: 130,
+                width: 150,
               }}
               onPress={() => navigation.navigate('ScanQR')}>
               <Text style={{color: 'white', textAlign: 'center'}}>

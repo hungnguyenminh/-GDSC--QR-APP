@@ -1,9 +1,8 @@
 import React, {Component, ReactElement, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Linking,ImageBackground} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-// import {RNCamera} from 'react-native-camera';
 import {ref, get, set} from 'firebase/database';
-import {database} from '../../configs/firebase/firebaseconfig.js';
+import {database, linkSheet} from '../../configs/firebase/firebaseconfig.js';
 import AlertStatus from '../../components/AlertStatus.js'
 
 function containsSpecialCharacters(str) {
