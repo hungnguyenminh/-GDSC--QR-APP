@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(0,122,255)',
     alignItems: 'center',
     width: 200,
-    padding: 16,
+    padding: 10,
     borderRadius: 5,
   },
   textStyle: {

@@ -136,9 +136,10 @@ const styles = StyleSheet.create({
   buttonTouchable: {
     backgroundColor:'rgb(0,122,255)',
     alignItems: 'center',
-    width: 200,
-    padding: 16,
-    borderRadius:5,
+    width: 180,
+    paddingHorizontal: 17,
+    paddingVertical: 14,
+    borderRadius:12,
   },
   linkContainer: {
     alignItems: 'center',

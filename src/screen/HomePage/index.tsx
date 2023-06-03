@@ -5,7 +5,6 @@ import {useNavigation} from '@react-navigation/native';
 import {ref, onValue, set} from 'firebase/database';
 import {database, linkSheet} from '../../configs/firebase/firebaseconfig';
 import {updateById} from '../../utils/HandleFuntions';
-// import QRCodeGenerator from "../QRCodeGenerator";
 import {useNetInfo} from '@react-native-community/netinfo';
 import AlertStatus from '../../components/AlertStatus.js';
 
@@ -30,7 +29,6 @@ export default function HomePage(): ReactElement {
   
 
   const handlegenerator = () => {
-    // console.log('handlegenerator');
     // const docRef = database.ref('142Ei6ewo87GYD-f6qzL_V-KmKtBQN5s6cDObMkgsBXI/Sheet1/');
     // docRef.remove();
 
@@ -65,15 +63,6 @@ export default function HomePage(): ReactElement {
         data.map((item: any, index: number) => (
           <QRCodeGenerator key={index} item={item} itemKey={index} />
         ))} */}
-
-      {/* {isGenSuccess && (
-        <AlertStatus
-          name="Generate Success"
-          status={true}
-          isShowAlert={isGenSuccess}
-          setIsShowAlert={setIsGenSuccess}
-        />
-      )} */}
 
       <ImageBackground
         source={require('../../assets/bg.png')}
