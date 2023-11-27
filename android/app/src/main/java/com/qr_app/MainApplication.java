@@ -1,4 +1,4 @@
-package com.qr_app;
+package com.qr_scanner_app;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

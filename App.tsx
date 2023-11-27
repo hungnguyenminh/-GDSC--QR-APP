@@ -1,29 +1,26 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import QRCodeGenerator from './src/screen/QRCodeGenerator';
-import ScanScreen from './src/screen/ScanScreen';
-import HomePage from './src/screen/HomePage';
+import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
+import Home from './src/screen/Home';
+import Login from './src/screen/Login';
+import {UserProvider} from './src/provider/UserProvider';
+import ScanQr from './src/screen/ScanQr';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-       screenOptions={{
-        headerStyle: {
-          backgroundColor: '#060b0f',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}
-      >
-        <Stack.Screen name="Home" component={HomePage} />
-        <Stack.Screen name="GenerateQR" component={QRCodeGenerator} />
-        <Stack.Screen name="ScanQR" component={ScanScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="ScanQr" component={ScanQr} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 }
