@@ -1,6 +1,9 @@
 import React, {useContext} from 'react';
-import {Button, View, StyleSheet} from 'react-native';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {Image, View, StyleSheet, Text} from 'react-native';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from '@react-native-google-signin/google-signin';
 import {UserContext} from '../../provider/UserProvider';
 import {useNavigation} from '@react-navigation/native';
 
@@ -26,7 +29,15 @@ function Login() {
 
   return (
     <View style={styles.root}>
-      <Button onPress={signIn} title="Đăng nhập google" />
+      <View>
+        <Image
+          source={require('../../access/logo.png')}
+          style={styles.logo}
+          resizeMode="cover"
+        />
+        <Text style={styles.text}>Đăng nhập để bắt đầu</Text>
+      </View>
+      <GoogleSigninButton onPress={signIn} />
     </View>
   );
 }
@@ -36,6 +47,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  logo: {
+    height: 200,
+    width: 200,
+  },
+  text: {
+    alignItems: 'center',
+    fontWeight: '600',
+    marginBottom: 50,
+    fontSize: 26,
+    color: '#3b82f6',
   },
 });
 
